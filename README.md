@@ -20,7 +20,7 @@
 
 ## 📂 Estructura del Repositorio
 * `datasets/`: Archivos y conjuntos de datos (CSV).
-* `notebooks/`: Código fuente de Python (limpieza y modelos de Machine Learning).
+* `src/`: Código fuente de Python (limpieza y modelos de Machine Learning).
 * `docs/`: Informes del proyecto en formato PDF (Primer Avance, Segundo Avance e Informe Final).
 ---
 
