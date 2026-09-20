@@ -1,6 +1,6 @@
-# Proyecto de Aprendizaje Automático - DML-2-2026
+# PRACTICA DEL PRIMER PARCIAL - DML-2-2026
 
-**Materia:** Aprendizaje Automático (DML-2-2026)  
+**Materia:** Ciencia de Datos y Machine Learning (DML-2-2026)  
 **Docente:** Lic. Patricia Rodríguez  
 **Equipo:** Escuadrón de datos07 (DataSquad07)  
 
