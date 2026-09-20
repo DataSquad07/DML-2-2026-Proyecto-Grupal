@@ -1,66 +1,56 @@
 # -*- coding: utf-8 -*-
 """
-PROYECTO INTEGRADOR - SEGUNDO AVANCE
-Modelos Implementados:
- 1. Modelos Regresionales (Linear Regression, Decision Tree Regressor, SVR)
- 2. Modelos de Clasificación (Logistic Regression, Decision Tree Classifier, SVC)
+===============================================================================
+PROYECTO GRUPAL - MACHINE LEARNING
+Punto de Entrada Principal (main.py)
+
+Ejecución del Primer y Segundo Avance:
+  1. Limpieza de datos y partición (80/20 estratificada/regresional).
+  2. Entrenamiento y evaluación de modelos de Clasificación y Regresión.
+===============================================================================
 """
 
-from src.limpieza_covid import obtener_datos_covid
-from src.limpieza_hr import obtener_datos_hr
+import sys
+import os
 
-# Modelos
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
-from sklearn.svm import SVR, SVC
+# Aseguramos que la carpeta 'src' esté en el path de búsqueda de Python
+sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
-# Evaluaciones
-from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, f1_score
+from modelo_recursos_humanos import entrenar_evaluar_clasificacion_hr
+from modelo_covid import entrenar_evaluar_regresion_covid
 
-def evaluar_modelos_covid():
-    print("=" * 78)
-    print("1. EVALUACIÓN DE MODELOS - DATASET COVID-19 (REGRESIÓN)")
-    print("=" * 78)
-    
-    X_train, X_test, y_train, y_test = obtener_datos_covid()
 
-    modelos = {
-        "Regresión Lineal": LinearRegression(),
-        "Árbol de Decisión (Regresor)": DecisionTreeRegressor(random_state=42),
-        "Support Vector Regression (SVR)": SVR(kernel='rbf')
-    }
+def ejecutar_proyecto():
+    print("=" * 80)
+    print("           EJECUCIÓN DEL PROYECTO GRUPAL DE MACHINE LEARNING")
+    print("=" * 80)
 
-    for nombre, modelo in modelos.items():
-        modelo.fit(X_train, y_train)
-        predicciones = modelo.predict(X_test)
-        mse = mean_squared_error(y_test, predicciones)
-        r2 = r2_score(y_test, predicciones)
-        print(f"\n[+] {nombre}:")
-        print(f"    - Error Cuadrático Medio (MSE) : {mse:.2f}")
-        print(f"    - Coeficiente de Determinación (R2): {r2:.4f}")
+    # -------------------------------------------------------------------------
+    # 1. MODELO DE CLASIFICACIÓN (RECURSOS HUMANOS)
+    # -------------------------------------------------------------------------
+    print("\n>>> INICIANDO PROCESAMIENTO Y MODELADO: RECURSOS HUMANOS <<<")
+    try:
+        modelo_hr = entrenar_evaluar_clasificacion_hr(max_depth=4, criterion='gini')
+        print("\n[OK] Modelo de Clasificación de Recursos Humanos ejecutado con éxito.")
+    except Exception as e:
+        print(f"\n[ERROR] Ocurrió un problema en Recursos Humanos: {e}")
 
-def evaluar_modelos_hr():
-    print("\n" + "=" * 78)
-    print("2. EVALUACIÓN DE MODELOS - DATASET RECURSOS HUMANOS (CLASIFICACIÓN)")
-    print("=" * 78)
+    print("\n" + "-" * 80)
 
-    X_train, X_test, y_train, y_test = obtener_datos_hr()
+    # -------------------------------------------------------------------------
+    # 2. MODELO REGRESIONAL (COVID-19)
+    # -------------------------------------------------------------------------
+    print("\n>>> INICIANDO PROCESAMIENTO Y MODELADO: COVID-19 <<<")
+    try:
+        modelo_arbol_covid, modelo_lineal_covid = entrenar_evaluar_regresion_covid(max_depth=5)
+        print("\n[OK] Modelos de Regresión de COVID-19 ejecutados con éxito.")
+    except Exception as e:
+        print(f"\n[ERROR] Ocurrió un problema en COVID-19: {e}")
 
-    modelos = {
-        "Regresión Logística": LogisticRegression(max_iter=1000),
-        "Árbol de Decisión (Clasificador)": DecisionTreeClassifier(random_state=42),
-        "Support Vector Classifier (SVC)": SVC(kernel='rbf')
-    }
+    print("\n" + "=" * 80)
+    print("           EJECUCIÓN COMPLETADA EXITOSAMENTE")
+    print("=" * 80)
 
-    for nombre, modelo in modelos.items():
-        modelo.fit(X_train, y_train)
-        predicciones = modelo.predict(X_test)
-        acc = accuracy_score(y_test, predicciones)
-        f1 = f1_score(y_test, predicciones, average='weighted')
-        print(f"\n[+] {nombre}:")
-        print(f"    - Exactitud (Accuracy) : {acc:.4f}")
-        print(f"    - Puntaje F1 (F1-Score): {f1:.4f}")
 
-if __name__ == "__main__":
-    evaluar_modelos_covid()
-    evaluar_modelos_hr()
+if __name__ == '__main__':
+    ejecutar_proyecto()
