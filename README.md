@@ -19,10 +19,9 @@
 ---
 
 ## 📂 Estructura del Repositorio
-
-* `datasets/`: Contiene los conjuntos de datos de trabajo (originales y procesados).
-* `notebooks/`: Cuadernos de Jupyter con la limpieza de datos, análisis y entrenamiento de modelos.
-
+* `datasets/`: Archivos y conjuntos de datos (CSV).
+* `notebooks/`: Código fuente de Python (limpieza y modelos de Machine Learning).
+* `docs/`: Informes del proyecto en formato PDF (Primer Avance, Segundo Avance e Informe Final).
 ---
 
 ## 📌 Estado del Proyecto
